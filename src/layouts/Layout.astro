@@ -23,8 +23,6 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
-// The RSS feed is a single, site-wide feed at the site root.
-const rssHref = "/rss.xml";
 ---
 
 <!doctype html>
@@ -69,13 +67,6 @@ const rssHref = "/rss.xml";
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 
-    <!-- RSS autodiscovery -->
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={site.title}
-      href={new URL(rssHref, Astro.site)}
-    />
 
     <!-- Filled at runtime by theme.ts to match the current background colour -->
     <meta name="theme-color" content="" />
