@@ -28,15 +28,6 @@ export default defineConfig({
         config.features?.showArchives !== false || !page.endsWith("/archives/"),
     }),
   ],
-  i18n: {
-    locales: ["pt-BR", "en"],
-    defaultLocale: "pt-BR",
-    fallback: { en: "pt-BR" },
-    routing: {
-      prefixDefaultLocale: false,
-      fallbackType: "rewrite",
-    },
-  },
   markdown: {
     processor: unified({
       remarkPlugins: [

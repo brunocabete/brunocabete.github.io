@@ -1,7 +1,6 @@
 ---
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import { resolveDefaultOgImagePath } from "@/utils/resolveDefaultOgImagePath";
 import { getAssetPath } from "@/utils/withBase";
 import config from "@/config";
@@ -24,15 +23,14 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
-// The RSS feed is a single, site-wide feed (not localized), so it always
-// lives at the default-locale path.
-const rssHref = getRelativeLocaleUrl(config.site.lang, "rss.xml");
+// The RSS feed is a single, site-wide feed at the site root.
+const rssHref = "/rss.xml";
 ---
 
 <!doctype html>
 <html
   dir={site.dir ?? "ltr"}
-  lang={Astro.currentLocale ?? site.lang}
+  lang={site.lang}
   class="overflow-y-scroll scroll-smooth"
 >
   <head>

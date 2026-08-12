@@ -83,7 +83,7 @@ if (typeof initOgImage === "string") {
 }
 
 if (!ogImageUrl && config.features.dynamicOgImage) {
-  // The dynamic OG image endpoint lives at the default-locale path only.
+  // The dynamic OG image endpoint lives at the post path only.
   const postUrl = getPostUrl(post.id, post.filePath).replace(/\/+$/, "");
   ogImageUrl = `${postUrl}/index.png`;
 }

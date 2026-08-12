@@ -1,6 +1,4 @@
-import type { UIStrings } from "../types";
-
-export default {
+export const t = {
   nav: {
     home: "Início",
     posts: "Posts",
@@ -57,7 +55,6 @@ export default {
     skipToContent: "Pular para o conteúdo",
     openMenu: "Abrir menu",
     closeMenu: "Fechar menu",
-    switchLanguage: "Trocar de idioma",
     toggleTheme: "Alternar tema",
     searchPlaceholder: "Buscar posts...",
     noResults: "Nenhum resultado encontrado",
@@ -69,4 +66,17 @@ export default {
     message: "Página não encontrada",
     goHome: "Voltar para o início",
   },
-} satisfies UIStrings;
+} as const;
+
+/**
+ * Replace `{{key}}` placeholders in UI strings.
+ */
+export function tplStr(
+  template: string,
+  vars: Record<string, string | number>
+): string {
+  return template.replace(/\{\{(\w+)\}\}/g, (_, key: string) => {
+    const value = vars[key];
+    return value !== undefined && value !== null ? String(value) : "";
+  });
+}
