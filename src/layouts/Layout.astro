@@ -24,10 +24,9 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
-const rssHref = getRelativeLocaleUrl(
-  Astro.currentLocale ?? config.site.lang,
-  "rss.xml"
-);
+// The RSS feed is a single, site-wide feed (not localized), so it always
+// lives at the default-locale path.
+const rssHref = getRelativeLocaleUrl(config.site.lang, "rss.xml");
 ---
 
 <!doctype html>

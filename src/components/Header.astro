@@ -9,7 +9,7 @@ import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconX from "@/assets/icons/IconX.svg";
 import LinkButton from "./LinkButton.astro";
 import { stripBase, stripLocale } from "@/utils/withBase";
-import { useTranslations } from "@/i18n";
+import { useTranslations, locales } from "@/i18n";
 import config from "@/config";
 
 const { site, features } = config;
@@ -32,6 +32,11 @@ const isActive = (path: string) => {
   const pathArray = path.split("/").filter(p => p.trim());
   return currentPath === path || currentPathArray[0] === pathArray[0];
 };
+
+// Relative path without the leading slash for building locale-switch links,
+// e.g. currentPath "/posts/tag" → path "posts/tag".
+const localeSwitchPath = currentPath.replace(/^\/+/, "");
+const otherLocales = locales.filter(l => l !== locale);
 ---
 
 <a
@@ -156,6 +161,20 @@ const isActive = (path: string) => {
                 <IconMoon class="absolute top-[50%] left-[50%] translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
                 <IconSunHigh class="absolute top-[50%] left-[50%] translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
               </button>
+            </li>
+          )
+        }
+        {
+          otherLocales.length > 0 && (
+            <li class="col-span-2 flex items-center justify-center sm:col-span-1">
+              <LinkButton
+                href={getRelativeLocaleUrl(otherLocales[0], localeSwitchPath)}
+                class="focus-outline hover:text-accent relative size-12 p-4 text-xs font-semibold uppercase sm:size-8 sm:p-0"
+                title={t.a11y.switchLanguage}
+                aria-label={t.a11y.switchLanguage}
+              >
+                {otherLocales[0]}
+              </LinkButton>
             </li>
           )
         }

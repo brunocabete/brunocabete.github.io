@@ -1,4 +1,5 @@
 import type { UIStrings } from "./types";
+import config from "@/config";
 
 export { tplStr } from "./format";
 
@@ -12,7 +13,22 @@ for (const [path, mod] of Object.entries(modules)) {
   translations[locale] = mod.default;
 }
 
-/** Returns UI strings for the given locale, falling back to English. */
-export function useTranslations(locale: string = "en"): UIStrings {
-  return translations[locale] ?? translations["en"];
+const primaryLocale = config.site.lang;
+
+/** List of available locale codes (keys of the translation files). */
+export const locales = Object.keys(translations);
+
+/**
+ * Returns UI strings for the given locale.
+ * Falls back to the primary locale (pt-BR), then to English.
+ */
+export function useTranslations(
+  locale: string | undefined = primaryLocale
+): UIStrings {
+  const resolved = locale ?? primaryLocale;
+  return (
+    translations[resolved] ??
+    translations[primaryLocale] ??
+    translations["en"]
+  );
 }
